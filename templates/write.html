@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <title>Booogle</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" id="theme" content="#ff6600">
+        <link rel="apple-touch-icon" href="/static/logo_apple">
+        <link href="{{ url_for('static',filename='main.css')}}" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+        <link rel = "icon" href = "static/logo.png" type = "image/x-icon">
+        <link rel="manifest" href="/static/manifest.json">
+    </head>
+    <body>
+        <div class="top" id="top">Booogle Write</div>
+        <nav class="nav">
+            <a style="float:right;">Save</a>
+            <a>Home</a>
+            <a>New</a>
+            <a>Feedback</a>
+            <a>Booogle</a>
+            <a>Like</a>
+            <a>Follow Me</a>
+        </nav>
+        <nav class="pick">
+            <a><input type="text" placeholder="Title"class="title"></a>
+            <a class="picka">format_bold</a>
+            <a ><input type="color" class="color"></a>
+            <a><input type="number" max="100" min="5" placeholder="Size" class="num"></a>
+            <a class="picka">format_align_left</a>
+            <a class="picka">format_align_center</a>
+            <a class="picka">format_align_right</a>
+            <a class="picka">print</a>
+        </nav>
+        <textarea class="text"></textarea>
+        <script>
+            name = {{name|tojson}}
+            document.getElementById("top").innerText = "Booogle Write - "+name
+        </script>
+        <script src="/static/app.js"></script>
+    </body>
+</html>
