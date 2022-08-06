@@ -40,7 +40,7 @@ body{
     background-position:center;
     background-repeat:no-repeat;
     background-size:cover;
-    background-attachment: absolute;
+    background-attachment:fixed;
     text-align:center;
     font-family: IBM Plex Sans;
     color:var(--light);
@@ -75,8 +75,8 @@ body{
 }
 
 .nav{
-    border-bottom:2px solid var(--tranback);
-    position:absolute;
+    border-bottom:2px solid var(--border);
+    position:fixed;
     top:25px;
     left:0px;
     background-color:var(--tranback);
@@ -92,15 +92,31 @@ body{
     line-height:45px;
     transition:.2s background-color;
 }
+.nava{
+    color:var(--light);
+    font-size:15px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    float:left;
+    height:100%;
+    width:80px;
+    line-height:45px;
+    transition:.2s background-color;
+}
 
 .nav a:hover{
+    background-color:var(--tranborder);
+    border-bottom: 2px solid var(--color);
+}
+.nava:hover{
     background-color:var(--tranborder);
     border-bottom: 2px solid var(--color);
 }
 
 .top{
     color:#242424;
-    position:absolute;
+    position:fixed;
     top:0px;
     left:0px;
     width:100%;
@@ -165,12 +181,13 @@ body{
 }
 
 .pick{
-    position:absolute;
+    position:fixed;
     top:72px;
     left:0px;
     background:var(--tranback);
     height:45px;
     width:100%;
+    border-bottom:2px solid var(--border);
 }
 .pick a{
     margin:10px 4px;
@@ -245,7 +262,7 @@ body{
 .text{
     font-family: IBM Plex Sans;
     margin:10px;
-    padding:10px;
+    padding:20px;
     resize: none;
     position:absolute;
     top:200px;

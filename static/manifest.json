@@ -5,7 +5,7 @@
     {
       "src": "Booogle_Logo_520.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "520x520"
     },
     {
       "src": "Booogle_Logo_192.png",
@@ -15,7 +15,7 @@
     {
       "src": "Logo_2_520.png",
       "type": "image/png",
-      "sizes": "512x512",
+      "sizes": "520x520",
       "purpose": "maskable" 
     }
   ],
@@ -31,15 +31,15 @@
       "short_name": "New",
       "description": "Booogle Write",
       "url": "/write",
-      "icons": [{ "src": "Logo_2_520.png", "sizes": "512x512" }]
-    },
+      "icons": [{ "src": "Logo_2_520.png", "sizes": "520x520" }]
+    }
   ],
   "description": "Booogle",
   "screenshots": [
     {
       "src": "Booogle_Logo_520.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "520x520"
     }
   ]
 }

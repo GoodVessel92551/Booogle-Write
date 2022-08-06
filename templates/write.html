@@ -14,9 +14,10 @@
         <link rel="manifest" href="/static/manifest.json">
     </head>
     <body>
+        <form method="post">
         <div class="top" id="top">Booogle Write</div>
         <nav class="nav">
-            <a style="float:right;">Save</a>
+            <input style="float:right;" class="nava" value="Save" type="submit">
             <a>Home</a>
             <a>New</a>
             <a>Feedback</a>
@@ -25,19 +26,40 @@
             <a>Follow Me</a>
         </nav>
         <nav class="pick">
-            <a><input type="text" placeholder="Title"class="title"></a>
-            <a class="picka">format_bold</a>
-            <a ><input type="color" class="color"></a>
-            <a><input type="number" max="100" min="5" placeholder="Size" class="num"></a>
-            <a class="picka">format_align_left</a>
-            <a class="picka">format_align_center</a>
-            <a class="picka">format_align_right</a>
-            <a class="picka">print</a>
+            <a><input type="text" name="title" placeholder="Title"class="title"></a>
+            <a class="picka" onclick="send('bold')">format_bold</a>
+            <a ><input name="color" type="color" class="color"></a>
+            <a><input name="size" type="number" max="100" min="5" placeholder="Size" class="num"></a>
+            <a class="picka" onclick="send('left')">format_align_left</a>
+            <a class="picka" onclick="send('center')">format_align_center</a>
+            <a class="picka" onclick="send('right')">format_align_right</a>
+            <a class="picka" onclick="print()">print</a>
         </nav>
-        <textarea class="text"></textarea>
+        <textarea name="text" class="text"></textarea>
+        </form>
         <script>
             name = {{name|tojson}}
             document.getElementById("top").innerText = "Booogle Write - "+name
+            var id = 0
+            var bold = "False"
+            var align = "center"
+            function send(a) {
+                if (a == "bold"){
+                    if (bold == "False"){
+                        bold = "True"
+                    }
+                    else if(bold == "True"){
+                        bold = "False"
+                    }
+                }
+                else if (a == 'left'|| a == 'center' || a == 'right'){
+                    align = a
+    
+                }
+                url = "?id="+id+"&bold="+bold+"&align="+align
+                console.log(url)
+            }
+            
         </script>
         <script src="/static/app.js"></script>
     </body>

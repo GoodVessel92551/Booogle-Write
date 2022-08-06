@@ -26,8 +26,16 @@ def home():
     return render_template("home.html",name = web.auth.name)
 
 @web.authenticated
-@app.route('/write')
+@app.route('/write',methods=['POST','GET'])
 def write():
+    if request.method == "POST":
+        print("Post")
+    id = request.args.get("id")
+    change = request.args.get("change")
+    if change == True:
+        align = request.args.get("align")
+        bold = request.args.get("bold")
     return render_template("write.html",name = web.auth.name)
+
 
 app.run(host='0.0.0.0', port=81,debug=True)
