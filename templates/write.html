@@ -14,7 +14,7 @@
         <link rel="manifest" href="/static/manifest.json">
     </head>
     <body>
-        <form method="post">
+        <form id="form" method="post" action="">
         <div class="top" id="top">Booogle Write</div>
         <nav class="nav">
             <input style="float:right;" class="nava" value="Save" type="submit">
@@ -26,40 +26,72 @@
             <a>Follow Me</a>
         </nav>
         <nav class="pick">
-            <a><input type="text" name="title" placeholder="Title"class="title"></a>
-            <a class="picka" onclick="send('bold')">format_bold</a>
-            <a ><input name="color" type="color" class="color"></a>
-            <a><input name="size" type="number" max="100" min="5" placeholder="Size" class="num"></a>
+            <a><input id="title" type="text" name="title" maxlength="20" placeholder="Title"class="title"></a>
+            <a class="picka"id="bold" onclick="send('bold')">format_bold</a>
+            <a ><input id="color" onchange="change('color')" name="color" type="color" class="color"></a>
+            <a><input id="size" onchange="change('size')" name="size" type="number" max="100" min="5" placeholder="Size" class="num"></a>
             <a class="picka" onclick="send('left')">format_align_left</a>
             <a class="picka" onclick="send('center')">format_align_center</a>
             <a class="picka" onclick="send('right')">format_align_right</a>
             <a class="picka" onclick="print()">print</a>
         </nav>
-        <textarea name="text" class="text"></textarea>
+        <textarea name="text" onkeyup="change()" id="text"class="text"></textarea>
         </form>
         <script>
-            name = {{name|tojson}}
+            name = {{name|tojson}};
+            doc = {{doc|tojson}};
+            console.log(doc)
             document.getElementById("top").innerText = "Booogle Write - "+name
             var id = 0
-            var bold = "False"
-            var align = "center"
+            var bold = doc[5]
+            var align = doc[4]
             function send(a) {
                 if (a == "bold"){
                     if (bold == "False"){
                         bold = "True"
+                        document.getElementById("bold").style.color = "#ff6600"
+                        document.getElementById("text").style.fontWeight = "bold"
                     }
-                    else if(bold == "True"){
+                    else{
                         bold = "False"
+                        document.getElementById("bold").style.color = "var(--light)"
+                        document.getElementById("text").style.fontWeight = "normal"
                     }
                 }
                 else if (a == 'left'|| a == 'center' || a == 'right'){
                     align = a
-    
+                    document.getElementById("text").style.textAlign = a
                 }
-                url = "?id="+id+"&bold="+bold+"&align="+align
-                console.log(url)
+                url = "/write?id="+id+"&bold="+bold+"&align="+align
+                document.getElementById("form").action = url
             }
-            
+            function load() {
+                document.getElementById("title").value = doc[0]
+                document.getElementById("color").value = doc[2]
+                document.getElementById("size").value = doc[1]
+                document.getElementById("text").style.color = doc[2]
+                document.getElementById('text').innerHTML = doc[3]
+                document.getElementById("text").style.fontSize = doc[1]+"px"
+                document.getElementById("text").style.textAlign = doc[4];
+                url = "/write?id="+id+"&bold="+doc[5]+"&align="+doc[4]
+                document.getElementById("form").action = url
+                console.log(document.getElementById("text").innerText)
+                if (doc[5] == "True"){
+                    document.getElementById("bold").style.color = "#ff6600"
+                    document.getElementById("text").style.fontWeight = "bold";
+                }else{
+                    document.getElementById("bold").style.color = "var(--light)"
+                }
+            }
+            function change(a) {
+                console.log(a)
+                if (a == "color"){
+                    document.getElementById("text").style.color = document.getElementById("color").value
+                }else{
+                    document.getElementById("text").style.fontSize = document.getElementById("size").value+"px"
+                }
+            }
+            load()
         </script>
         <script src="/static/app.js"></script>
     </body>

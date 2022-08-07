@@ -4,7 +4,7 @@ from replit import web, db
 
 app = Flask(__name__)
 users = web.UserStore()
-
+doc = ['Document', '13', '#000000', 'This is a test', 'right', 'False']
 @app.route('/')
 def index():
     db["names"] = []
@@ -29,13 +29,24 @@ def home():
 @app.route('/write',methods=['POST','GET'])
 def write():
     if request.method == "POST":
-        print("Post")
-    id = request.args.get("id")
-    change = request.args.get("change")
-    if change == True:
+        title = request.form["title"]
+        font_size = request.form["size"]
+        color = request.form["color"]
+        text = request.form["text"]
+        id = request.args.get("id")
         align = request.args.get("align")
         bold = request.args.get("bold")
-    return render_template("write.html",name = web.auth.name)
+        print(align)
+        doc[4] = align
+        doc[5] = bold
+        doc[0] = title
+        doc[1] = font_size
+        doc[2] = color
+        doc[3] = text
+        print(doc)
+    return render_template("write.html",name = web.auth.name, doc=doc)
+
+
 
 
 app.run(host='0.0.0.0', port=81,debug=True)
