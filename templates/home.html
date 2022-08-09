@@ -16,23 +16,29 @@
     <body>
         <div class="top" id="top">Booogle Write</div>
         <nav class="nav">
-            <a>Home</a>
-            <a>New</a>
+            <a href="/home">Home</a>
+            <a href="/new">New</a>
             <a>Feedback</a>
-            <a>Booogle</a>
-            <a>Like</a>
-            <a>Follow Me</a>
+            <a href="https://booogle-two.goodvessel92551.repl.co/">Booogle</a>
+            <a href="/__repl">Like</a>
+            <a href="https://replit.com/@GoodVessel92551">Follow Me</a>
         </nav>
         <span class="your textback">Your Documents</span>
-        <div class="docs">
-            <a id="dochover">Title<br><span class="docsdesc">This doc has this in it.</span></a>
-            <a id="dochover">Title<br><span class="docsdesc">This doc has this in it.</span></a>
-            <a id="dochover">Title<br><span class="docsdesc">This doc has this in it.</span></a>
+        <div class="docs" id="docs">
         </div>
         <script>
-            name = {{name|tojson}}
+            name = {{name|tojson}};
+            doc= {{docs|tojson}};
+            console.log(doc)
             document.getElementById("top").innerText = "Booogle Write - "+name
             document.querySelector("body").style.setProperty("background-image","url(/static/background.jpg)")
+            if (doc.length < 6){
+                
+            }else{
+                for(var i=6; i<doc.length;i=i+7){
+                    document.getElementById("docs").innerHTML = document.getElementById("docs").innerHTML + '<a href="/open?id='+doc[i]+'" id="dochover">'+doc[i-6]+'<br><span class="docsdesc">'+doc[i-3]+'</span></a>'
+                }
+            }
         </script>
         <script src="/static/app.js"></script>
     </body>

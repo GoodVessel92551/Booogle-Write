@@ -17,34 +17,35 @@
         <form id="form" method="post" action="">
         <div class="top" id="top">Booogle Write</div>
         <nav class="nav">
-            <input style="float:right;" class="nava" value="Save" type="submit">
-            <a>Home</a>
-            <a>New</a>
+            <input style="float:right;" onclick="save=true" class="nava" value="Save" type="submit">
+            <a href="/home">Home</a>
+            <a href="/new">New</a>
             <a>Feedback</a>
-            <a>Booogle</a>
-            <a>Like</a>
-            <a>Follow Me</a>
+            <a href="https://booogle-two.goodvessel92551.repl.co/">Booogle</a>
+            <a href="/__repl">Like</a>
+            <a href="https://replit.com/@GoodVessel92551">Follow Me</a>
         </nav>
         <nav class="pick">
             <a><input id="title" type="text" name="title" maxlength="20" placeholder="Title"class="title"></a>
             <a class="picka"id="bold" onclick="send('bold')">format_bold</a>
-            <a ><input id="color" onchange="change('color')" name="color" type="color" class="color"></a>
+            <a ><input id="color" onchange="change('color')"value="#000000" name="color" type="color" class="color"></a>
             <a><input id="size" onchange="change('size')" name="size" type="number" max="100" min="5" placeholder="Size" class="num"></a>
             <a class="picka" onclick="send('left')">format_align_left</a>
             <a class="picka" onclick="send('center')">format_align_center</a>
             <a class="picka" onclick="send('right')">format_align_right</a>
             <a class="picka" onclick="print()">print</a>
         </nav>
-        <textarea name="text" onkeyup="change()" id="text"class="text"></textarea>
+        <textarea onkeyup="change()" name="text" id="text"class="text"></textarea>
         </form>
         <script>
             name = {{name|tojson}};
             doc = {{doc|tojson}};
             console.log(doc)
             document.getElementById("top").innerText = "Booogle Write - "+name
-            var id = 0
+            var id = doc[6]
             var bold = doc[5]
             var align = doc[4]
+            var save = false
             function send(a) {
                 if (a == "bold"){
                     if (bold == "False"){
@@ -75,7 +76,6 @@
                 document.getElementById("text").style.textAlign = doc[4];
                 url = "/write?id="+id+"&bold="+doc[5]+"&align="+doc[4]
                 document.getElementById("form").action = url
-                console.log(document.getElementById("text").innerText)
                 if (doc[5] == "True"){
                     document.getElementById("bold").style.color = "#ff6600"
                     document.getElementById("text").style.fontWeight = "bold";
@@ -83,14 +83,19 @@
                     document.getElementById("bold").style.color = "var(--light)"
                 }
             }
-            function change(a) {
-                console.log(a)
+            function change() {
                 if (a == "color"){
                     document.getElementById("text").style.color = document.getElementById("color").value
                 }else{
                     document.getElementById("text").style.fontSize = document.getElementById("size").value+"px"
                 }
             }
+            window.addEventListener('beforeunload', function (e) {
+                if (save == false){
+                    e.preventDefault()
+                    e.returnValue = ''
+                }
+            })
             load()
         </script>
         <script src="/static/app.js"></script>
