@@ -41,7 +41,6 @@ def write():
         for i in range(len(doc)):
             print(id)
             if str(doc[i]) == str(id):
-                print("Hello")
                 doc[i-6]=title
                 doc[i-5]=font_size
                 doc[i-4]=color
@@ -51,37 +50,41 @@ def write():
                 doc[i]=id
                 print(doc)
                 users.current["docs"] = doc
-                print(doc)
         return redirect("/write")
     else:
-        doc = users.current["docs"]
-        print(users.current["current"])
-        currentdoc = []
-        j = -7
-        for i in range(len(doc)):
-            if str(doc[i]) == str(users.current["current"]):
-                print("hi")
-                for k in range(7):
-                    j = j + 1
-                    currentdoc.append(doc[i+j])
-                break
-        print(currentdoc)
-        print(users.current["docs"])
-        return render_template("write.html",name = web.auth.name, doc=currentdoc)
+        if users.current["current"] != "":
+            doc = users.current["docs"]
+            print(users.current["current"])
+            currentdoc = []
+            j = -7
+            for i in range(len(doc)):
+                if str(doc[i]) == str(users.current["current"]):
+                    print("hi")
+                    for k in range(7):
+                        j = j + 1
+                        currentdoc.append(doc[i+j])
+                    break
+            print(currentdoc)
+            print(users.current["docs"])
+            return render_template("write.html",name = web.auth.name, doc=currentdoc)
+        else:
+            return "Please open a doc"
 
 @web.authenticated
 @app.route('/new')
 def new():
-    #['Document', '13', '#000000', 'This is a test', 'right', 'False',1]
-    users.current["current"] = users.current["id"]+1
-    users.current["id"] = users.current["id"]+ 1
-    users.current["docs"].append("New Document")
-    users.current["docs"].append("13")
-    users.current["docs"].append("#000000")
-    users.current["docs"].append("")
-    users.current["docs"].append("left")
-    users.current["docs"].append("False")
-    users.current["docs"].append(users.current["id"])
+    if len(users.current["docs"])/10 < 10:
+        users.current["current"] = users.current["id"]+1
+        users.current["id"] = users.current["id"]+ 1
+        users.current["docs"].append("New Document")
+        users.current["docs"].append("13")
+        users.current["docs"].append("#000000")
+        users.current["docs"].append("")
+        users.current["docs"].append("left")
+        users.current["docs"].append("False")
+        users.current["docs"].append(users.current["id"])
+    else:
+        return "You have used up your 10 documents delete some so you can make more"
     print(users.current["docs"])
     return redirect("/write")
 
@@ -95,16 +98,20 @@ def open():
 @web.authenticated
 @app.route('/delete')
 def delete():
-    def delit(id):
-        users.current["docs"].pop(i-6)
-        users.current["docs"].pop(i-6)
-        users.current["docs"].pop(i-6)
-        users.current["docs"].pop(i-6)
-        users.current["docs"].pop(i-6)
-        users.current["docs"].pop(i-6)
-        users.current["docs"].pop(i-6)
+    def delit(i):
+        doc = users.current["docs"]
+        doc.pop(i-6)
+        doc.pop(i-6)
+        doc.pop(i-6)
+        doc.pop(i-6)
+        doc.pop(i-6)
+        doc.pop(i-6)
+        doc.pop(i-6)
+        users.current["docs"] = doc
         return
     id = request.args.get("id")
+    if int(id) == users.current["current"]:
+        users.current["current"] = ""
     try:
         int(id)
     except:
@@ -114,11 +121,11 @@ def delete():
         i = 6
         print(docs[i])
         if str(docs[i]) == str(id):
-            delit(id)
+            delit(i)
             return redirect("/home")
         while i < len(docs):
             if str(docs[i]) == str(id):
-                delit(id)
+                delit(i)
                 break
             i=i+7
         return redirect("/home")

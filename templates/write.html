@@ -30,12 +30,13 @@
             <a class="picka"id="bold" onclick="send('bold')">format_bold</a>
             <a ><input id="color" onchange="change('color')"value="#000000" name="color" type="color" class="color"></a>
             <a><input id="size" onchange="change('size')" name="size" type="number" max="100" min="5" placeholder="Size" class="num"></a>
-            <a class="picka" onclick="send('left')">format_align_left</a>
-            <a class="picka" onclick="send('center')">format_align_center</a>
-            <a class="picka" onclick="send('right')">format_align_right</a>
+            <a class="picka" id="left" onclick="send('left')">format_align_left</a>
+            <a class="picka" id="center" onclick="send('center')">format_align_center</a>
+            <a class="picka" id="right" onclick="send('right')">format_align_right</a>
             <a class="picka" onclick="print()">print</a>
         </nav>
         <textarea onkeyup="change()" name="text" id="text"class="text"></textarea>
+            <div onclick="delit()" class="delete">delete</div>
         </form>
         <script>
             name = {{name|tojson}};
@@ -61,6 +62,10 @@
                 }
                 else if (a == 'left'|| a == 'center' || a == 'right'){
                     align = a
+                    document.getElementById("left").style.color = "var(--light)"
+                    document.getElementById("center").style.color = "var(--light)"
+                    document.getElementById("right").style.color = "var(--light)"
+                    document.getElementById(a).style.color = "#ff6600"
                     document.getElementById("text").style.textAlign = a
                 }
                 url = "/write?id="+id+"&bold="+bold+"&align="+align
@@ -75,6 +80,7 @@
                 document.getElementById("text").style.fontSize = doc[1]+"px"
                 document.getElementById("text").style.textAlign = doc[4];
                 url = "/write?id="+id+"&bold="+doc[5]+"&align="+doc[4]
+                document.getElementById(doc[4]).style.color = "#ff6600"
                 document.getElementById("form").action = url
                 if (doc[5] == "True"){
                     document.getElementById("bold").style.color = "#ff6600"
@@ -83,7 +89,7 @@
                     document.getElementById("bold").style.color = "var(--light)"
                 }
             }
-            function change() {
+            function change(a) {
                 if (a == "color"){
                     document.getElementById("text").style.color = document.getElementById("color").value
                 }else{
@@ -96,6 +102,9 @@
                     e.returnValue = ''
                 }
             })
+            function delit() {
+                window.open("/delete?id="+id,"_self")
+            }
             load()
         </script>
         <script src="/static/app.js"></script>

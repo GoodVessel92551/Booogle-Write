@@ -145,7 +145,7 @@ body{
 .docs a{
     cursor:pointer;
 	border: 2px solid var(--border);
-    line-height:40px;
+    line-height:20px;
     text-decoration:none;
 	position:relative;
     color:var(--light);
@@ -156,10 +156,11 @@ body{
     margin:5px;
     float:right;
     width:170px;
-    min-height:190px;
+    height:190px;
     background:var(--tranback);
     border-radius:10px;
 	transition: all .2s;
+    overflow:hidden;
 }
 
 .docsdesc{
@@ -263,7 +264,7 @@ body{
 
 .text{
     overflow: hidden;
-    font-family: IBM Plex Sans;
+    font-family:  Arial, Helvetica, sans-serif;;
     margin:10px;
     padding:60px;
     resize: none;
@@ -302,4 +303,20 @@ body{
         -ms-transform: none;
         transform: none;
     }
+}
+
+.delete{
+    cursor:pointer;
+    border-radius:5px;
+    position:fixed;
+    right:5px;
+    bottom:5px;
+    color:var(--light);
+    padding:5px;
+    background:var(--backborder);
+    font-family: 'Material Icons';
+    transition:.2s all;
+}
+.delete:hover{
+    color:#b80000;
 }
