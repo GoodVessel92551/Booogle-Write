@@ -1,7 +1,6 @@
 from better_profanity import profanity
 from flask import Flask, render_template, redirect, request, current_app
 from replit import web, db
-
 app = Flask(__name__)
 users = web.UserStore()
 @app.route('/')
@@ -39,7 +38,6 @@ def write():
         bold = request.args.get("bold")
         doc = users.current["docs"]
         for i in range(len(doc)):
-            print(id)
             if str(doc[i]) == str(id):
                 doc[i-6]=title
                 doc[i-5]=font_size
@@ -48,24 +46,20 @@ def write():
                 doc[i-2]=align
                 doc[i-1]=bold
                 doc[i]=id
-                print(doc)
                 users.current["docs"] = doc
         return redirect("/write")
     else:
         if users.current["current"] != "":
             doc = users.current["docs"]
-            print(users.current["current"])
             currentdoc = []
             j = -7
             for i in range(len(doc)):
-                if str(doc[i]) == str(users.current["current"]):
-                    print("hi")
+                current = users.current["current"]
+                if str(doc[i]) == str(current):
                     for k in range(7):
                         j = j + 1
                         currentdoc.append(doc[i+j])
                     break
-            print(currentdoc)
-            print(users.current["docs"])
             return render_template("write.html",name = web.auth.name, doc=currentdoc)
         else:
             return "Please open a doc"
@@ -73,7 +67,8 @@ def write():
 @web.authenticated
 @app.route('/new')
 def new():
-    if len(users.current["docs"])/10 < 10:
+    if len(users.current["docs"])/7 < 10:
+        db["docs"] = db["docs"] + 1
         users.current["current"] = users.current["id"]+1
         users.current["id"] = users.current["id"]+ 1
         users.current["docs"].append("New Document")
@@ -85,7 +80,6 @@ def new():
         users.current["docs"].append(users.current["id"])
     else:
         return "You have used up your 10 documents delete some so you can make more"
-    print(users.current["docs"])
     return redirect("/write")
 
 @web.authenticated
@@ -119,7 +113,6 @@ def delete():
     else:
         docs = users.current["docs"]
         i = 6
-        print(docs[i])
         if str(docs[i]) == str(id):
             delit(i)
             return redirect("/home")
@@ -130,4 +123,12 @@ def delete():
             i=i+7
         return redirect("/home")
 
-app.run(host='0.0.0.0', port=81,debug=True)
+@app.route('/admin')
+def admin():
+    if web.auth.name == "GoodVessel92551":
+        names = db["names"][0:]
+        return render_template("admin.html",name = web.auth.name, names=names, docs=db["docs"])
+    else:
+        return redirect("/home")
+
+app.run(host='0.0.0.0', port=81)
