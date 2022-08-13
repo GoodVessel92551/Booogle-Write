@@ -68,7 +68,8 @@ def write():
 @app.route('/new')
 def new():
     if len(users.current["docs"])/7 < 10:
-        db["docs"] = db["docs"] + 1
+        if web.auth.name != "GoodVessel92551":
+            db["docs"] = db["docs"] + 1
         users.current["current"] = users.current["id"]+1
         users.current["id"] = users.current["id"]+ 1
         users.current["docs"].append("New Document")

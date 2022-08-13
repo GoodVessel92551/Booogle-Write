@@ -204,68 +204,70 @@ body{
     transition:.2s all;
 }
 
-.picka:hover{
-    color:var(--color);
-    filter:brightness(125%);
-}
 .picka{
     user-select: none;
     font-family: 'Material Icons';
-    background:var(--dark);
-    border-radius:2px;
+    background:var(--backborder);
+    border-radius:4px;
     height:23px;
     width:23px;
     line-height:23px;
     transition:.2s all;
+    border:1px solid var(--border)
+}
+.picka:hover{
+    color:var(--color);
+    filter:brightness(95%);
+    border:1px solid var(--color);
 }
 
 .color{
     cursor:pointer;
-    border-radius:2px;
-    height:23px;
+    border-radius:4px;
+    height:26px;
     border:none;
     outline:none;
-    background:var(--dark);
-    border: 2px solid var(--dark);
+    background:var(--backborder);
     transition:.2s all;
+    border:1px solid var(--border)
 }
 
 .num{
     color:var(--light);
-    border-radius:2px;
+    border-radius:4px;
     width:40px;
-    background:var(--dark);
+    height:22px;
+    background:var(--backborder);
     border:none;
-    height:17px;
-    border: 2px solid var(--dark);
     transition:.2s all;
+    border:1px solid var(--border)
 }
 
 .num:focus{
     outline:none;
-    border: 2px solid var(--color);
-    filter:brightness(125%);
+    border: 1px solid var(--color);
+    filter:brightness(95%);
 }
 .color:focus{
-    border: 2px solid var(--color);
-    filter:brightness(125%);
+    border: 1px solid var(--color);
+    filter:brightness(95%);
 }
 
 .title{
     color:var(--light);
-    border-radius:2px;
+    border-radius:4px;
     width:200px;
-    background:var(--dark);
+    background:var(--backborder);
     border:none;
-    height:19px;
-    border: 2px solid var(--dark);
+    height:22px;
     transition:.2s all;
+    border:1px solid var(--border)
 }
 
 .title:focus{
     outline:none;
-    border: 2px solid var(--color);
-    filter:brightness(125%);
+    border: 1px solid var(--color);
+    filter:brightness(95%);
 }
 
 .text{
@@ -353,6 +355,9 @@ body{
     .color{
         width:25px;
     }
+    .pick{
+        top:60px;
+    }
 }
 
  .data{
@@ -392,6 +397,7 @@ body{
 }
 
 .md{
+    font-weight:600;
     cursor:pointer;
     border-radius:5px;
     position:fixed;
