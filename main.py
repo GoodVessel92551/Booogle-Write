@@ -49,7 +49,7 @@ def write():
                 users.current["docs"] = doc
         return redirect("/write")
     else:
-        if users.current["current"] != "":
+        if users.current["current"] != -1:
             doc = users.current["docs"]
             currentdoc = []
             j = -7
@@ -86,7 +86,7 @@ def new():
 @app.route('/open')
 def open():
     id = request.args.get("id")
-    users.current["current"] = id
+    users.current["current"] = int(id)
     return redirect("/write")
 
 @web.authenticated
@@ -105,7 +105,7 @@ def delete():
         return
     id = request.args.get("id")
     if int(id) == users.current["current"]:
-        users.current["current"] = ""
+        users.current["current"] = -1
     try:
         int(id)
     except:

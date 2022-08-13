@@ -12,6 +12,7 @@
       rel="stylesheet">
         <link rel = "icon" href = "static/logo.png" type = "image/x-icon">
         <link rel="manifest" href="/static/manifest.json">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     </head>
     <body>
         <form id="form" method="post" action="">
@@ -31,11 +32,13 @@
             <a class="picka" id="left" onclick="send('left')">format_align_left</a>
             <a class="picka" id="center" onclick="send('center')">format_align_center</a>
             <a class="picka" id="right" onclick="send('right')">format_align_right</a>
-            <a class="picka" onclick="print()">print</a>
+            <a class="picka" onclick="markd('print')">print</a>
         </nav>
-        <textarea onkeyup="change()" name="text" id="text"class="text"></textarea>
-            <div onclick="delit()" class="delete">delete</div>
+        <div contenteditable="true" onkeyup="change()"id="text"class="text"></div>
+        <textarea name="text" id="text2" hidden></textarea>
         </form>
+        <button onclick="delit()" class="delete">delete</button>
+        <button onclick="markd()" id="md" class="md">Preview in Markdown</button>
         <script>
             name = {{name|tojson}};
             doc = {{doc|tojson}};
@@ -45,6 +48,7 @@
             var bold = doc[5]
             var align = doc[4]
             var save = false
+            var md = false
             function send(a) {
                 if (a == "bold"){
                     if (bold == "False"){
@@ -80,6 +84,7 @@
                 url = "/write?id="+id+"&bold="+doc[5]+"&align="+doc[4]
                 document.getElementById(doc[4]).style.color = "#ff6600"
                 document.getElementById("form").action = url
+                document.getElementById("text2").innerText = doc[3]
                 if (doc[5] == "True"){
                     document.getElementById("bold").style.color = "#ff6600"
                     document.getElementById("text").style.fontWeight = "bold";
@@ -88,6 +93,7 @@
                 }
             }
             function change(a) {
+                document.getElementById("text2").innerHTML = document.getElementById("text").innerHTML
                 if (a == "color"){
                     document.getElementById("text").style.color = document.getElementById("color").value
                 }else{
@@ -102,6 +108,27 @@
             })
             function delit() {
                 window.open("/delete?id="+id,"_self")
+            }
+
+            function markd(a) {
+                if (a == "print"){
+                    document.getElementById("text").contentEditable = false
+                    document.getElementById("text").innerHTML = marked.parse(document.getElementById("text").innerText)
+                    md = true
+                    document.getElementById("md").style.color = "var(--color)"
+                    print()
+                }
+                else if (!md){
+                    document.getElementById("text").contentEditable = false
+                    document.getElementById("text").innerHTML = marked.parse(document.getElementById("text").innerText)
+                    md = true
+                    document.getElementById("md").style.color = "var(--color)"
+                }else{
+                    document.getElementById("text").contentEditable = true
+                    document.getElementById("text").innerHTML = document.getElementById("text2").innerText
+                    md = false
+                    document.getElementById("md").style.color = "var(--light)"
+                }
             }
             load()
         </script>
