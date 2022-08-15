@@ -18,6 +18,7 @@
         <nav class="nav">
             <a href="/home">Home</a>
             <a href="/new">New</a>
+            <a onclick="open_it()">Delete All</a>
             <a href="https://replit.com/@GoodVessel92551/Booogle-Two">Booogle</a>
             <a href="/__repl">Like</a>
             <a href="https://replit.com/@GoodVessel92551">Follow Me</a>
@@ -25,6 +26,13 @@
         <span class="your textback">Your Documents</span>
         <div class="docs" id="docs">
         </div>
+        <dialog id="del" class="delmode">
+            <h2>Are you sure?</h2>
+            <h5>Are you sure that you what to delete all of your documents?</h5>
+        <button class="cancel" onclick="close_it()" autofocus>Cancel</button>
+        <button class="delete_it" onclick="delit()">Delete</button>
+        </dialog>
+        <footer class="foot">Made By GoodVessel92551</footer>
         <script>
             name = {{name|tojson}};
             doc= {{docs|tojson}};
@@ -37,6 +45,16 @@
                 for(var i=6; i<doc.length;i=i+7){
                     document.getElementById("docs").innerHTML = document.getElementById("docs").innerHTML + '<a href="/open?id='+doc[i]+'" id="dochover">'+doc[i-6]+'<br><br><span class="docsdesc">'+doc[i-3]+'</span></a>'
                 }
+            }
+            function delit(params) {
+                window.open("/clear","_self")
+            }
+            function close_it() {
+                console.log("Close")
+                document.getElementById('del').close()
+            }
+            function open_it() {
+                document.getElementById("del").showModal()
             }
         </script>
         <script src="/static/app.js"></script>

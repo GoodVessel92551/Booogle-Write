@@ -13,7 +13,7 @@
         <link rel="manifest" href="/static/manifest.json">
     </head>
     <body>
-        <div class="top" id="top">Booogle Write</div>
+        <div class="top" id="top">Booogle Admin</div>
         <nav class="nav">
             <a href="/home">Home</a>
             <a href="/new">New</a>
@@ -29,7 +29,8 @@
             name = {{name|tojson}};
             users = {{names|tojson}};
             docs = {{docs|tojson}};
-            document.getElementById("top").innerText = "Booogle Mail - "+name
+            document.querySelector("body").style.setProperty("background-image","url(/static/background.jpg)")
+            document.getElementById("top").innerText = "Booogle Admin - "+name
             document.getElementById("users").innerText = users.length;
             document.getElementById("unread").innerText = docs;
         </script>

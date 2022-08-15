@@ -46,7 +46,10 @@ def write():
                 doc[i-2]=align
                 doc[i-1]=bold
                 doc[i]=id
-                users.current["docs"] = doc
+                if len(doc)%7 == 0:
+                    users.current["docs"] = doc
+                else:
+                    return "something went wrong"
         return redirect("/write")
     else:
         if users.current["current"] != -1:
@@ -102,7 +105,10 @@ def delete():
         doc.pop(i-6)
         doc.pop(i-6)
         doc.pop(i-6)
-        users.current["docs"] = doc
+        if len(doc)%7 == 0:
+            users.current["docs"] = doc
+        else:
+            return "something went wrong please try again"
         return
     id = request.args.get("id")
     if int(id) == users.current["current"]:
@@ -112,8 +118,8 @@ def delete():
     except:
         return "Something Went Wrong"
     else:
+        i = 0
         docs = users.current["docs"]
-        i = 6
         if str(docs[i]) == str(id):
             delit(i)
             return redirect("/home")
@@ -121,7 +127,7 @@ def delete():
             if str(docs[i]) == str(id):
                 delit(i)
                 break
-            i=i+7
+            i=i+1
         return redirect("/home")
 
 @app.route('/admin')
@@ -132,4 +138,9 @@ def admin():
     else:
         return redirect("/home")
 
+@web.authenticated
+@app.route('/clear')
+def clear():
+    users.current["docs"] = []
+    return redirect("/home")
 app.run(host='0.0.0.0', port=81)
